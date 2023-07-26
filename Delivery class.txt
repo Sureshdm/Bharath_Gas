@@ -1,0 +1,54 @@
+package gasBooking;
+
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
+public class Delivery  extends Booking{
+
+	Scanner sc=new Scanner(System.in);
+	public String delPersonName;
+	int customerOTP;
+	
+	public Delivery(String name, String street, String area, String pincode, String mobile, int numberOfCylinders) {
+		super(name, street, area, pincode, mobile, numberOfCylinders);
+		// TODO Auto-generated constructor stub
+		
+	}
+
+	public void amountCalc()
+	{
+		//dt_2 is delivery and dt+1 is booking
+		long dayDiff=dt_2.getTime()-dt_1.getDate();
+		long newDiff=TimeUnit.DAYS.convert(dayDiff,TimeUnit.MILLISECONDS);
+		
+		if(newDiff > 7)
+		{
+			refund=41.25;
+			amount=amount-refund;
+		}
+	}
+	public void verifyOTP()
+	{
+		if(status.equals("B"))
+		{
+			
+			System.out.println("Enter OTP");
+			customerOTP=sc.nextInt();
+			
+			if(customerOTP!=otp)
+			{
+				status="C";
+			}else {
+				status="D";
+			}
+		}else {
+			System.out.println("No booking found!!!");
+		}
+	}
+	
+	public void delPersonDetails()
+	{
+		System.out.println("\nEnter the delivery pereson name");
+		delPersonName=sc.nextLine();
+	}
+}
